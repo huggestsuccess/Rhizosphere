@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>PMC</name>
+    </assembly>
+    <members>
+        <member name="M:PMC.Program.Main(System.Int32,System.Boolean,System.IO.FileInfo)">
+            <summary>
+            This app was designed with the sole pourpouse of growing the dankest mushrooms ever
+            </summary>
+            <param name="intOption">An option whose argument is parsed as an int</param>
+            <param name="boolOption">An option whose argument is parsed as a bool</param>
+            <param name="fileOption">An option whose argument is parsed as a FileInfo</param>
+        </member>
+    </members>
+</doc>

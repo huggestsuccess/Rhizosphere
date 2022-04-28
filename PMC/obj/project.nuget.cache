@@ -1,0 +1,14 @@
+{
+  "version": 2,
+  "dgSpecHash": "DPoPOCZDWiAB9KU+8vtNIL8nDpqCTm7ujIEg7N8QxGLvrW43r/ZAKdSGtiPKOLWQcrJVCfppe3wk9bl8JcDl0A==",
+  "success": true,
+  "projectFilePath": "/Users/n/Development/PersonalMushroomComputer/PMC/PMC.csproj",
+  "expectedPackageFiles": [
+    "/Users/n/.nuget/packages/microsoft.csharp/4.4.1/microsoft.csharp.4.4.1.nupkg.sha512",
+    "/Users/n/.nuget/packages/system.commandline/2.0.0-beta1.20214.1/system.commandline.2.0.0-beta1.20214.1.nupkg.sha512",
+    "/Users/n/.nuget/packages/system.commandline.dragonfruit/0.3.0-alpha.20214.1/system.commandline.dragonfruit.0.3.0-alpha.20214.1.nupkg.sha512",
+    "/Users/n/.nuget/packages/system.commandline.rendering/0.3.0-alpha.20214.1/system.commandline.rendering.0.3.0-alpha.20214.1.nupkg.sha512",
+    "/Users/n/.nuget/packages/system.memory/4.5.3/system.memory.4.5.3.nupkg.sha512"
+  ],
+  "logs": []
+}
