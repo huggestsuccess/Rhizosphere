@@ -1,4 +1,5 @@
 global using Rhizosphere.Core;
+global using Microsoft.AspNetCore.Mvc;
 
 var builder = WebApplication.CreateBuilder(args);
 
