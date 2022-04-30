@@ -29,7 +29,7 @@ public class ClimateService : BackgroundService
                 _log.LogWarning("Unable to read humidity");
             else
             {
-                _log.LogInformation("Read {r} {p}", relativeHumidity, relativeHumidity.Percent);
+                _log.LogInformation("Relative Humidity is {r}", relativeHumidity);
 
                 LatestRelativeHumidity = new Read<RelativeHumidity>(relativeHumidity, DateTime.Now);
             }
@@ -38,7 +38,7 @@ public class ClimateService : BackgroundService
                 _log.LogWarning("Unable to read temperature");
             else
             {
-                _log.LogInformation("Read {r} {c}", temperature, temperature.DegreesCelsius);
+                _log.LogInformation("Temperature is {t}", temperature);
 
                 LatestTemperature = new Read<Temperature>(temperature, DateTime.Now);
             }
