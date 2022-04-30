@@ -1,0 +1,14 @@
+{
+    "Phases": [
+        {
+            "Name": "Phase 1: Mycelium growth",
+            "MinTemperature": 23,
+            "MaxTemperature": 25,
+            "MaxHumidity": 90,
+            "MinHumidity": 95,
+            "Duration": "12 - 16 days",
+            "CO2": "5,000 - 20,000 ppm",
+            "Light": null
+        }
+    ]
+}
