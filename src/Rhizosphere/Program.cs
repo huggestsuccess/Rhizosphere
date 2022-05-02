@@ -13,8 +13,10 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddSingleton<Fan>();
 
+builder.Services.AddSingleton<RecipeRepository>();
 builder.Services.AddSingleton<ClimateService>();
 builder.Services.AddHostedService(s=> s.GetRequiredService<ClimateService>());
+builder.Services.AddHostedService<RhizosphereController>();
 
 var app = builder.Build();
 
