@@ -1,6 +1,7 @@
 using Microsoft.Extensions.FileProviders;
 using Microsoft.AspNetCore.Hosting;
-
+using System.IO;
+using System.Text.Json;
 
 namespace Rhizosphere.Core;
 
@@ -18,7 +19,7 @@ public class RecipeRepository
         var dirContents = _fp.GetDirectoryContents("Recipes");
         foreach(var dirContent in dirContents)
         {
-            System.Console.WriteLine(dirContent);
+            var fileText = File.ReadAllText(dircontent.FullPath);
         }
         return Array.Empty<Recipe>();
     }
