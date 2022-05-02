@@ -13,6 +13,7 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddSingleton<Fan>();
 
+
 builder.Services.AddSingleton<RecipeRepository>();
 builder.Services.AddSingleton<ClimateService>();
 builder.Services.AddHostedService(s=> s.GetRequiredService<ClimateService>());
@@ -22,7 +23,7 @@ var app = builder.Build();
 
 app.UseSwagger();
 app.UseSwaggerUI();
-
+app.UseStaticFiles();
 
 //app.UseHttpsRedirection();
 

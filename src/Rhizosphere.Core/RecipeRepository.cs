@@ -1,4 +1,6 @@
 using Microsoft.Extensions.FileProviders;
+using Microsoft.AspNetCore.Hosting;
+
 
 namespace Rhizosphere.Core;
 
@@ -6,9 +8,9 @@ public class RecipeRepository
 {
     private readonly IFileProvider _fp;
 
-    public RecipeRepository(IFileProvider fileProvider)
+    public RecipeRepository(IWebHostEnvironment environment)
     {
-        _fp = fileProvider;
+        _fp = environment.WebRootFileProvider;
     }
 
     public IEnumerable<Recipe> GetRecipes()
