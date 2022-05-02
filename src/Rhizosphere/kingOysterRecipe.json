@@ -4,8 +4,28 @@
             "Name": "Phase 1: Mycelium growth",
             "MinTemperature": 23,
             "MaxTemperature": 25,
-            "MaxHumidity": 90,
-            "MinHumidity": 95,
+            "MinHumidity": 90,
+            "MaxHumidity": 95,
+            "Duration": "12 - 16 days",
+            "CO2": "5,000 - 20,000 ppm",
+            "Light": null
+        },
+        {
+            "Name": "Phase 2: Primordia formation / Fruiting initiation",
+            "MinTemperature": 10,
+            "MaxTemperature": 15,
+            "MinHumidity": 90,
+            "MaxHumidity": 95,
+            "Duration": "12 - 16 days",
+            "CO2": "5,000 - 20,000 ppm",
+            "Light": null
+        },
+        {
+            "Name": "Phase 1: Mycelium growth",
+            "MinTemperature": 23,
+            "MaxTemperature": 25,
+            "MinHumidity": 90,
+            "MaxHumidity": 95,
             "Duration": "12 - 16 days",
             "CO2": "5,000 - 20,000 ppm",
             "Light": null
