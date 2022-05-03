@@ -17,10 +17,21 @@ public class RecipeRepository
     public IEnumerable<Recipe> GetRecipes()
     {
         var dirContents = _fp.GetDirectoryContents("Recipes");
-        foreach(var dirContent in dirContents)
+        foreach (var dirContent in dirContents)
         {
-            var fileText = File.ReadAllText(dircontent.FullPath);
+            if (dirContent.IsDirectory)
+                continue;
+
+            var fileText = File.ReadAllText(dirContent.PhysicalPath);
+
+            var recipe = JsonSerializer.Deserialize<Recipe>(fileText);
+
+            if (recipe is null)
+                continue;
+
+            yield return recipe;
         }
-        return Array.Empty<Recipe>();
     }
+
+    
 }

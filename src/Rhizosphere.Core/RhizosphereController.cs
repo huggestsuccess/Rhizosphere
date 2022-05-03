@@ -2,13 +2,13 @@ namespace Rhizosphere.Core;
 
 
 
-public class RhizosphereController : BackgroundService
+public class RhizosphereHandler : BackgroundService
 {
-    private readonly ILogger<RhizosphereController> _log;
+    private readonly ILogger<RhizosphereHandler> _log;
     private readonly ClimateService _cs;
     private readonly Fan _fan;
 
-    public RhizosphereController(ILogger<RhizosphereController> logger, ClimateService cs, Fan fan)
+    public RhizosphereHandler(ILogger<RhizosphereHandler> logger, ClimateService cs, Fan fan)
     {
         _log = logger;
         _cs = cs;

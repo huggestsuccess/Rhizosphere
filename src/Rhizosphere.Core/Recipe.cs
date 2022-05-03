@@ -19,3 +19,9 @@ public class Recipe
     public IEnumerable<Phase> Phases { get; set; } = Array.Empty<Phase>();
 }
 
+public class RecipeExecution
+{   
+    public Recipe SelectedRecipe { get; set; }  = new();
+
+    public DateTime StartedAt { get; set;} = DateTime.Now;
+}
