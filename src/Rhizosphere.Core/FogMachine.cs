@@ -4,16 +4,16 @@ using System;
 
 namespace Rhizosphere.Core;
 
-public class Fan : IDisposable
+public class FogMachine : IDisposable
 {
-    private readonly ILogger<Fan> _log;
+    private readonly ILogger<FogMachine> _log;
     private readonly GpioController _controller;
 
-    public Fan(ILogger<Fan> logger)
+    public FogMachine(ILogger<FogMachine> logger)
     {
         _log = logger;
         _controller = new GpioController(PinNumberingScheme.Board);
-        _controller.OpenPin(34, PinMode.Output, PinValue.High);
+        _controller.OpenPin(32, PinMode.Output, PinValue.High);
     }
 
     public bool IsRunning { get; private set; }

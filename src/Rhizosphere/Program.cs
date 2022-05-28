@@ -12,6 +12,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddSingleton<Fan>();
+builder.Services.AddSingleton<FogMachine>();
 
 
 builder.Services.AddSingleton<RecipeRepository>();
