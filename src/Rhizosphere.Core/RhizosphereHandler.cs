@@ -1,6 +1,33 @@
 namespace Rhizosphere.Core;
 
 
+public class UptimeLimit
+{
+    public TimeSpan? Daily {get; set;} 
+    public TimeSpan? Hourly {get; set;} 
+    public TimeSpan? Minutely {get; set;} 
+}
+
+public class DeviceOptions
+{
+    public int PinNumber { get; set; }  
+
+    public bool NormallyOpen { get; set; }  = false;
+
+    public bool Enabled { get; set; }  = true;
+    
+    public bool ActiveOverride { get; set; }  = false;
+
+    public UptimeLimit? UptimeLimit {get; set;}
+}
+
+public class RhizosphereOptions
+{
+    public string ActiveRecipeName {get; set;} = string.Empty;
+
+
+    
+}
 
 public class RhizosphereHandler : BackgroundService
 {

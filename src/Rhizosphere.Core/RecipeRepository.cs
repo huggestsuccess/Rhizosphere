@@ -33,5 +33,6 @@ public class RecipeRepository
         }
     }
 
-    
+    public Recipe? GetRecipe(string recipeName)
+     => GetRecipes().FirstOrDefault(r => r.Name == recipeName);
 }
