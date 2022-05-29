@@ -24,9 +24,8 @@ public class DeviceOptions
 public class RhizosphereOptions
 {
     public string ActiveRecipeName {get; set;} = string.Empty;
-
-
-    
+    public FanOptions FanOptions {get; set;} = new();
+    public FogMachineOptions FogMachineOptions {get; set;} = new();
 }
 
 public class RhizosphereHandler : BackgroundService

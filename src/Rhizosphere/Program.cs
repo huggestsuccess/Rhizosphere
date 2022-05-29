@@ -20,6 +20,12 @@ builder.Services.AddSingleton<ClimateService>();
 builder.Services.AddHostedService(s=> s.GetRequiredService<ClimateService>());
 builder.Services.AddHostedService<RhizosphereHandler>();
 
+
+builder.Services.Configure<RhizosphereOptions>(builder.Configuration.GetSection(nameof(RhizosphereOptions)));
+
+builder.Services.Configure<FanOptions>(builder.Configuration.GetSection(nameof(RhizosphereOptions) + ":" + nameof(FanOptions)));
+
+
 var app = builder.Build();
 
 app.UseSwagger();
