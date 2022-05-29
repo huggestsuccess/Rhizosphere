@@ -1,11 +1,50 @@
 namespace Rhizosphere.Core;
 
 
-public class UptimeLimit
+public class UptimeLimit : Uptime
 {
-    public TimeSpan? Daily {get; set;} 
-    public TimeSpan? Hourly {get; set;} 
-    public TimeSpan? Minutely {get; set;} 
+    public UptimeLimit() //better defaults
+    {
+        Daily = TimeSpan.FromDays(1);
+        Hourly = TimeSpan.FromHours(1);
+        Minutely = TimeSpan.FromMinutes(1);
+    }
+}
+
+public class Uptime
+{
+    public TimeSpan Daily {get; set;}
+    public TimeSpan Hourly {get; set;}
+    public TimeSpan Minutely {get; set;}
+
+    public Uptime()
+    {
+
+    }
+
+    public Uptime(Uptime previous, DateTime from, DateTime to)
+    {   
+        var dt = from - to;
+
+        if(from.Minute == to.Minute)
+            Minutely+= dt;
+        else    
+            Minutely = TimeSpan.FromSeconds(dt.Seconds);
+
+        if(from.Hour == to.Hour)
+            Hourly += dt;
+        else    
+            Hourly = TimeSpan.FromSeconds(dt.Minutes);
+
+        if(from.Day == to.Day)
+            Daily+= dt;
+        else    
+            Daily = TimeSpan.FromSeconds(dt.Seconds);
+    }
+
+
+    public override string? ToString()
+        => $"m{Minutely}h{Hourly}d{Daily}";
 }
 
 public class DeviceOptions
@@ -46,19 +85,22 @@ public class RhizosphereHandler : BackgroundService
 
     protected override async Task ExecuteAsync(CancellationToken token = default)
     {
+        _log.LogInformation($"Fan uptime limit: {_fan.DeviceOptions.UptimeLimit}");
+        _log.LogInformation($"FogMachine uptime limit: {_fm.DeviceOptions.UptimeLimit}");
+
 
         while (!token.IsCancellationRequested)
         {
-            await Task.Delay(5000, token);
-
+            await Task.Delay(500, token);
 
             bool shouldFanRun = GetWetherFanShouldRun(_cs);
-            
-            if(shouldFanRun == _fan.IsRunning)
-                continue;
 
-            
-            if(shouldFanRun)
+            var fanUptimeGood = IsWithinUptimeLimit(_fan);
+
+            if(shouldFanRun == _fan.IsRunning && fanUptimeGood) 
+                continue;
+                
+            if(fanUptimeGood)
             {
                 _log.LogWarning("Its getting too hot, turning on fan at {t}", _cs.LatestTemperature?.Value);
 
@@ -66,7 +108,7 @@ public class RhizosphereHandler : BackgroundService
             }
             else
             {
-                _log.LogWarning("Fan has run long enugh,turning it off at {t}", _cs.LatestTemperature?.Value);
+                _log.LogWarning("Fan has run long enugh,turning it off at {t}, {u}", _cs.LatestTemperature?.Value, _fan.Uptime);
 
                 _fan.Stop();
             }
@@ -78,5 +120,24 @@ public class RhizosphereHandler : BackgroundService
         && cs.LatestTemperature is not null
         && cs.LatestTemperature.Value.Value > 23;
 
-    pivate bool IsWithinUptimeLimit<T>(Device<T> device, )
+    private bool IsWithinUptimeLimit(Device device)
+    {
+        var limit = device.DeviceOptions.UptimeLimit;
+
+        if(limit is null)
+            return true;
+
+        var uptime = device.Uptime;
+
+        if(uptime.Minutely > limit.Minutely)
+            return false;
+
+        if(uptime.Hourly > limit.Hourly)
+            return false;
+
+        if(uptime.Daily > limit.Daily)
+            return false;
+        
+        return true;
+    }
 }
