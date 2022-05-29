@@ -13,7 +13,7 @@ public class Fan : IDisposable
     {
         _log = logger;
         _controller = new GpioController(PinNumberingScheme.Board);
-        _controller.OpenPin(34, PinMode.Output, PinValue.High);
+        _controller.OpenPin(36, PinMode.Output, PinValue.Low);
     }
 
     public bool IsRunning { get; private set; }
@@ -30,7 +30,7 @@ public class Fan : IDisposable
         if(IsRunning == state)
             return default;
 
-        _controller.Write(32, state ? PinValue.Low : PinValue.High);
+        _controller.Write(36, state ? PinValue.High : PinValue.Low);
 
         IsRunning = state;
         var t0 = DateTime.Now;

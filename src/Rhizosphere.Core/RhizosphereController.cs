@@ -8,11 +8,14 @@ public class RhizosphereHandler : BackgroundService
     private readonly ClimateService _cs;
     private readonly Fan _fan;
 
-    public RhizosphereHandler(ILogger<RhizosphereHandler> logger, ClimateService cs, Fan fan)
+    private readonly FogMachine _fm;
+
+    public RhizosphereHandler(ILogger<RhizosphereHandler> logger, ClimateService cs, Fan fan, FogMachine fogMachine)
     {
         _log = logger;
         _cs = cs;
         _fan = fan;
+        _fm = fogMachine;
     }
 
     protected override async Task ExecuteAsync(CancellationToken token = default)
