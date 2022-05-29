@@ -24,6 +24,7 @@ builder.Services.AddHostedService<RhizosphereHandler>();
 builder.Services.Configure<RhizosphereOptions>(builder.Configuration.GetSection(nameof(RhizosphereOptions)));
 
 builder.Services.Configure<FanOptions>(builder.Configuration.GetSection(nameof(RhizosphereOptions) + ":" + nameof(FanOptions)));
+builder.Services.Configure<FogMachineOptions>(builder.Configuration.GetSection(nameof(RhizosphereOptions) + ":" + nameof(FogMachineOptions)));
 
 
 var app = builder.Build();

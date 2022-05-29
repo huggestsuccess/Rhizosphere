@@ -29,6 +29,9 @@ public class Device<T> : IDisposable
 
     public DateTime LatestStateChange { get; private set; } = DateTime.Now;
 
+    public DeviceOptions DeviceOptions {get;}
+     => _optionsDelegate.CurrentValue;
+
     public TimeSpan Run()
         => ChangeState(true);
     public TimeSpan Stop()

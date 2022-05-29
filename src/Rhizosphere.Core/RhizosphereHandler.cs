@@ -77,4 +77,6 @@ public class RhizosphereHandler : BackgroundService
         => cs.LatestRelativeHumidity is not null
         && cs.LatestTemperature is not null
         && cs.LatestTemperature.Value.Value > 23;
+
+    pivate bool IsWithinUptimeLimit<T>(Device<T> device, )
 }
