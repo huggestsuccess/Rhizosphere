@@ -1,10 +1,13 @@
 global using Rhizosphere.Core;
 global using Microsoft.AspNetCore.Mvc;
 global using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+// builder.UseSystemd();
+builder.Host.UseSystemd();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

@@ -1,0 +1,8 @@
+[Unit]
+Description=rhizosphere execution daemon
+
+[Service]
+Type=notify
+ExecStart=/home/p/Rhizosphere/PersonalMushroomComputer/src/Rhizosphere/bin/Release/net6.0/linux-arm64/publish/Rhizosphere
+[Install]
+WantedBy=multi-user.target
