@@ -1,13 +1,17 @@
-
-
-dotnet publish -r linux-arm64 --sc -c Release
+dotnet publish -r linux-arm64 --sc -c Release -o /home/p/Rhizosphere/Service
 
 sudo cp /home/p/Rhizosphere/PersonalMushroomComputer/src/Rhizosphere/rhizosphere.service /etc/systemd/system/rhizosphere.service
 
 sudo systemctl daemon-reload
 
-sudo systemctl start rhizosphere.service
-
-cd /home/p/Rhizosphere/PersonalMushroomComputer/src/Rhizosphere/bin/Release/net6.0/linux-arm64/publish/
+cd /home/p/Rhizosphere/Service
 
 chmod +x Rhizosphere
+
+sudo systemctl start rhizosphere.service
+
+sudo systemctl status rhizosphere.service
+
+sudo journalctl -u rhizosphere.service -f
+
+sudo systemctl enable rhizosphere.service

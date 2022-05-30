@@ -42,4 +42,13 @@ app.UseAuthorization();
 
 app.MapControllers();
 
+try
+{ 
 app.Run();
+
+    
+}
+catch (System.Exception ex)
+{
+    System.Console.WriteLine(ex.Message);
+}

@@ -3,6 +3,12 @@ Description=rhizosphere execution daemon
 
 [Service]
 Type=notify
-ExecStart=/home/p/Rhizosphere/PersonalMushroomComputer/src/Rhizosphere/bin/Release/net6.0/linux-arm64/publish/Rhizosphere
+WorkingDirectory=/home/p/Rhizosphere/Service
+User=p
+ExecStart=/home/p/Rhizosphere/Service/Rhizosphere
+# ensure the service restarts after crashing
+Restart=always
+# amount of time to wait before restarting the service                  
+RestartSec=5
 [Install]
 WantedBy=multi-user.target
