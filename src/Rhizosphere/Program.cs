@@ -5,12 +5,9 @@ using Microsoft.Extensions.Hosting;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-// builder.UseSystemd();
 builder.Host.UseSystemd();
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
@@ -21,7 +18,7 @@ builder.Services.AddSingleton<FogMachine>();
 
 builder.Services.AddSingleton<RecipeRepository>();
 builder.Services.AddSingleton<ClimateService>();
-builder.Services.AddHostedService(s=> s.GetRequiredService<ClimateService>());
+builder.Services.AddHostedService(s => s.GetRequiredService<ClimateService>());
 builder.Services.AddHostedService<RhizosphereHandler>();
 
 
@@ -44,10 +41,8 @@ app.UseAuthorization();
 app.MapControllers();
 
 try
-{ 
-app.Run();
-
-    
+{
+    app.Run();
 }
 catch (System.Exception ex)
 {

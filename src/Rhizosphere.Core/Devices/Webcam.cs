@@ -18,15 +18,13 @@ public class Webcam
 
     public async Task TakePhotoAsync(CancellationToken token = default)
     {
-        //"fswebcam image.jpg  --no-banner --no-overlay"
-        //like oranges cos east game cpu exponents gold bull
         _log.LogInformation("Taking a nice pic... ");
 
         using var process = new Process();
         process.StartInfo = new ProcessStartInfo
         {
             FileName = "/usr/bin/fswebcam",
-            Arguments = $"--save image.jpeg -S 6 -D 1 -d /dev/vide0 --no-banner --no-overlay --no-underlay --no-info --no-timestamp -r 1920x1080",
+            Arguments = $"--save image.jpeg -S 6 -D 1 --no-banner --no-overlay --no-underlay --no-info --no-timestamp --no-subtitle -r 1920x1080",
             RedirectStandardOutput = true,
             UseShellExecute = false,
             CreateNoWindow = true,
