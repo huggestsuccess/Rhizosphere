@@ -15,6 +15,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddSingleton<Fan>();
+builder.Services.AddSingleton<Webcam>();
 builder.Services.AddSingleton<FogMachine>();
 
 
