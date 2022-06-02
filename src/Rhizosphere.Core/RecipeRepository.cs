@@ -7,22 +7,18 @@ namespace Rhizosphere.Core;
 
 public class RecipeRepository
 {
-    private readonly IFileProvider _fp;
-
-    public RecipeRepository(IWebHostEnvironment environment)
-    {
-        _fp = environment.WebRootFileProvider;
-    }
+    private readonly string _dirPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Recipes");
 
     public IEnumerable<Recipe> GetRecipes()
     {
-        var dirContents = _fp.GetDirectoryContents("Recipes");
+        if (!Directory.Exists(_dirPath))
+            Directory.CreateDirectory(_dirPath);
+
+        var dirContents = Directory.GetFiles(_dirPath, "*.json");
+
         foreach (var dirContent in dirContents)
         {
-            if (dirContent.IsDirectory)
-                continue;
-
-            var fileText = File.ReadAllText(dirContent.PhysicalPath);
+            var fileText = File.ReadAllText(dirContent);
 
             var recipe = JsonSerializer.Deserialize<Recipe>(fileText);
 

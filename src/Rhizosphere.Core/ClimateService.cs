@@ -26,7 +26,7 @@ public class ClimateService : BackgroundService
             await Task.Delay(5000, token);
 
             if (!_dht.TryReadHumidity(out var relativeHumidity))
-                _log.LogWarning("Unable to read humidity");
+                _log.LogDebug("Unable to read humidity");
             else
             {
                 _log.LogInformation("Relative Humidity is {r}", relativeHumidity);
@@ -35,7 +35,7 @@ public class ClimateService : BackgroundService
             }
 
             if (!_dht.TryReadTemperature(out var temperature))
-                _log.LogWarning("Unable to read temperature");
+                _log.LogDebug("Unable to read temperature");
             else
             {
                 _log.LogInformation("Temperature is {t}", temperature);

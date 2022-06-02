@@ -16,8 +16,8 @@ public abstract class Device
 
     public Uptime Uptime
     {
-        get=>  IsRunning ? LatestUptime :
-                new Uptime(LatestUptime, LatestStateChange, DateTime.Now);
+        get=>  IsRunning ? new Uptime(LatestUptime, LatestStateChange, DateTime.Now) :
+                LatestUptime;
     }
     
 

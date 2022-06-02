@@ -3,10 +3,10 @@ namespace Rhizosphere.Core;
 public class Phase
 {
     public string Name { get; set; } = string.Empty;
-    public int MinTemperature { get; set; }
-    public int MaxTemperature { get; set; }
-    public int MinHumidity { get; set; }
-    public int MaxHumidity { get; set; }
+    public float MinTemperature { get; set; } = 10;
+    public float MaxTemperature { get; set; } = 30;
+    public float MinHumidity { get; set; } = 50;
+    public float MaxHumidity { get; set; } = 100;
     public string? Duration { get; set; }
     public string? CO2 { get; set; }
     public string? Light { get; set; }
