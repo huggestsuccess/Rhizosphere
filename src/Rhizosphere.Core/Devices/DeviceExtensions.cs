@@ -15,27 +15,17 @@ public static class DeviceExtensions
             return true;
 
         var uptime = device.Uptime;
-
         
-        if (uptime.Minutely > limit.Minutely)
-        {
-            System.Console.WriteLine("Reached Minutely uptime limit");
+        if (uptime.Minutely >= limit.Minutely)
             return false;
-        }
 
-        if (uptime.Hourly > limit.Hourly)
-        {
-            System.Console.WriteLine("Reached Minutely Hourly limit");
+        if (uptime.Hourly >= limit.Hourly)
             return false;
-        }
 
-        if (uptime.Daily > limit.Daily)
-        {
-            System.Console.WriteLine("Reached Minutely Daily limit");
+        if (uptime.Daily >= limit.Daily)
             return false;
-        }
-        System.Console.WriteLine("Device: {0}, Uptime: {1}, Limit: {2}", device, uptime, limit);
-
+        
+        
         return true;
     }
 }

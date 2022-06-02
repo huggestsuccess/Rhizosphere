@@ -16,8 +16,7 @@ public abstract class Device
 
     public Uptime Uptime
     {
-        get=>  IsRunning ? new Uptime(LatestUptime, LatestStateChange, DateTime.Now) :
-                LatestUptime;
+        get=>  new Uptime(LatestUptime, LatestStateChange, DateTime.Now, IsRunning);
     }
     
 
@@ -67,18 +66,16 @@ public class Device<T> : Device, IDisposable
         if (IsRunning == state)
             return default;
 
-        if(!IsRunning)
-            LatestUptime = new Uptime(LatestUptime, LatestStateChange, DateTime.Now);
+        if(!state)
+            LatestUptime = Uptime;
 
         var pinValue = GetPinValue(state, _optionsDelegate.CurrentValue.NormallyOpen);
-
 
         _controller.Write
         (
             _optionsDelegate.CurrentValue.PinNumber,
             pinValue
         );
-
 
         IsRunning = state;
         var t0 = DateTime.Now;

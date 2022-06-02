@@ -24,24 +24,44 @@ public class Uptime
 
     }
 
-    public Uptime(Uptime previous, DateTime from, DateTime to)
+    public Uptime(Uptime previous, DateTime from, DateTime to, bool isRunning)
     {
-        var dt = from - to;
+        if (isRunning)
+        {
+            var dt = to - from;
 
-        if (from.Minute == to.Minute)
-            Minutely += dt;
-        else
-            Minutely = TimeSpan.FromSeconds(dt.Seconds);
+            if (from.Minute == to.Minute)
+                Minutely += dt;
+            else
+                Minutely = TimeSpan.FromSeconds(dt.Seconds);
 
-        if (from.Hour == to.Hour)
-            Hourly += dt;
-        else
-            Hourly = TimeSpan.FromSeconds(dt.Minutes);
+            if (from.Hour == to.Hour)
+                Hourly += dt;
+            else
+                Hourly = TimeSpan.FromSeconds(dt.Minutes);
 
-        if (from.Day == to.Day)
-            Daily += dt;
+            if (from.Day == to.Day)
+                Daily += dt;
+            else
+                Daily = TimeSpan.FromSeconds(dt.Seconds);
+        }
         else
-            Daily = TimeSpan.FromSeconds(dt.Seconds);
+        {
+            if (from.Minute == to.Minute)
+                Minutely = previous.Minutely;
+            else
+                Minutely = default;
+
+            if (from.Hour == to.Hour)
+                Hourly = previous.Minutely;
+            else
+                Hourly = default;
+
+            if (from.Day == to.Day)
+                Daily = previous.Daily;
+            else
+                Daily = default;
+        }
     }
 
 
