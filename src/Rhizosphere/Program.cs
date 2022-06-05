@@ -32,10 +32,9 @@ var app = builder.Build();
 
 app.UseSwagger();
 app.UseSwaggerUI();
+app.UseDefaultFiles();
 app.UseStaticFiles();
-
-//app.UseHttpsRedirection();
-
+app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
