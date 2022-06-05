@@ -29,13 +29,13 @@ async function getStatus() {
 }
 
 async function drawStatus(status) {
-    let temperatureElement = document.getElementById(temperature);
+    let temperatureElement = document.getElementById("temperature");
 
     if (temperatureElement)
         temperatureElement.textContent = status.temperatureCelsius + " C°";
 
 
-    let humidityElement = document.getElementById(humidity);
+    let humidityElement = document.getElementById("humidity");
 
     if (humidityElement)
         humidityElement.textContent = status.humidityPercentage + " %";
