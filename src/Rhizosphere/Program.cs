@@ -20,7 +20,7 @@ builder.Services.AddSingleton<RecipeRepository>();
 builder.Services.AddSingleton<ClimateService>();
 builder.Services.AddHostedService(s => s.GetRequiredService<ClimateService>());
 builder.Services.AddHostedService<RhizosphereHandler>();
-
+builder.Services.AddHostedService<TimelapseService>();
 
 builder.Services.Configure<RhizosphereOptions>(builder.Configuration.GetSection(nameof(RhizosphereOptions)));
 

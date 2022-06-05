@@ -23,7 +23,7 @@ public class Webcam
         process.StartInfo = new ProcessStartInfo
         {
             FileName = "/usr/bin/fswebcam",
-            Arguments = $"--save {fileName} -S 6 -D 1 --no-banner --no-overlay --no-underlay --no-info --no-timestamp --no-subtitle -r 1920x1080",
+            Arguments = $"-S 6 -D 1 --no-banner --no-overlay --no-underlay --no-info --no-timestamp --no-subtitle -r 1920x1080 --save {fileName}",
             RedirectStandardOutput = true,
             UseShellExecute = false,
             CreateNoWindow = true,
