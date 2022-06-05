@@ -15,8 +15,7 @@ public class Webcam
         _log = logger;
     }
 
-
-    public async Task TakePhotoAsync(CancellationToken token = default)
+    public async Task TakePhotoAsync(string fileName, string directory, CancellationToken token = default)
     {
         _log.LogInformation("Taking a nice pic... ");
 
@@ -24,11 +23,11 @@ public class Webcam
         process.StartInfo = new ProcessStartInfo
         {
             FileName = "/usr/bin/fswebcam",
-            Arguments = $"--save image.jpeg -S 6 -D 1 --no-banner --no-overlay --no-underlay --no-info --no-timestamp --no-subtitle -r 1920x1080",
+            Arguments = $"--save {fileName} -S 6 -D 1 --no-banner --no-overlay --no-underlay --no-info --no-timestamp --no-subtitle -r 1920x1080",
             RedirectStandardOutput = true,
             UseShellExecute = false,
             CreateNoWindow = true,
-            WorkingDirectory = AppDomain.CurrentDomain.BaseDirectory
+            WorkingDirectory = directory
         };
 
         process.Start();
@@ -41,7 +40,9 @@ public class Webcam
 
     public async Task<FileStream> GetPhotoFileStream(CancellationToken token = default)
     {
-        await TakePhotoAsync(token);
+        var fileName = "webCamShot.jpeg";
+
+        await TakePhotoAsync(fileName, AppDomain.CurrentDomain.BaseDirectory, token);
         return File.OpenRead("image.jpeg");
     }
 }
