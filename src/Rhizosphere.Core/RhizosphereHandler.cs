@@ -123,22 +123,44 @@ public class RhizosphereHandler : BackgroundService
     {
         while (!token.IsCancellationRequested)
         {
-            await Task.Delay(500, token);
-
-            var activePhase = GetActivePhase();
-
-            if (activePhase is null)
-                activePhase = new();
-
-            if (ActivePhase.Name != activePhase.Name)
+            try
             {
-                _log.LogWarning("Active Phase change! Active Phase name: {apn}", activePhase.Name);
-                ActivePhase = activePhase;
+                await Task.Delay(500, token);
+                HandleRhizosphere();
             }
+            catch (TaskCanceledException)
+            {
 
-            HandleFan(activePhase);
-            HandleFogMachine(activePhase);
+            }
+            catch (Exception ex)
+            {
+                _log.LogError("Severe error: {ex}", ex);
+            }
         }
+    }
+
+    private void HandleRhizosphere()
+    {
+        var activePhase = GetPhaseFromRecipes();
+
+        HandleFan(activePhase);
+        HandleFogMachine(activePhase);
+    }
+
+    private Phase GetPhaseFromRecipes()
+    {
+        var activePhase = GetActivePhase();
+
+        if (activePhase is null)
+            activePhase = new();
+
+        if (ActivePhase.Name != activePhase.Name)
+        {
+            _log.LogWarning("Active Phase change! Active Phase name: {apn}", activePhase.Name);
+            ActivePhase = activePhase;
+        }
+
+        return activePhase;
     }
 
     private void HandleFan(Phase activePhase)
