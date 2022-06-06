@@ -17,7 +17,7 @@ public class Webcam
 
     public async Task TakePhotoAsync(string fileName, string directory, CancellationToken token = default)
     {
-        _log.LogInformation("Taking a nice pic... ");
+        _log.LogInformation("Taking a nice pic... and saving it to {d}/{f}", fileName, directory);
 
         using var process = new Process();
         process.StartInfo = new ProcessStartInfo
@@ -41,8 +41,12 @@ public class Webcam
     public async Task<FileStream> GetPhotoFileStream(CancellationToken token = default)
     {
         var fileName = "webCamShot.jpeg";
+        var directory = AppDomain.CurrentDomain.BaseDirectory;
 
-        await TakePhotoAsync(fileName, AppDomain.CurrentDomain.BaseDirectory, token);
-        return File.OpenRead("image.jpeg");
+        await TakePhotoAsync(fileName, directory, token);
+
+        var path = Path.Combine(directory, fileName);
+
+        return File.OpenRead(path);
     }
 }
