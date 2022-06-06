@@ -9,32 +9,45 @@ public class StatusController : ControllerBase
     private readonly Fan _fan;
     private readonly FogMachine _fm;
     private readonly ClimateService _cs;
-    
+    private readonly RhizosphereState _rs;
 
-    public StatusController(ILogger<StatusController> logger, IOptionsMonitor<RhizosphereOptions> optionsMonitor,  Fan fan, ClimateService climateService, FogMachine fogMachine)
+    public StatusController
+        (
+            ILogger<StatusController> logger, 
+            IOptionsMonitor<RhizosphereOptions> optionsMonitor,  
+            Fan fan, 
+            ClimateService climateService, 
+            FogMachine fogMachine,
+            RhizosphereState rhizosphereState
+        )
     {
         _log = logger;
         _fan = fan;
         _cs = climateService;
         _fm = fogMachine;
         _om = optionsMonitor;
+        _rs = rhizosphereState;
     }
     [HttpGet]
-    [Route("/Auto")]
-    public IActionResult SetAutoMode()
-        => Ok("TODO");
+    [Route("/Automatic")]
+    public IActionResult SetAutomaticMode()
+    {
+        _rs.SetAutomatic();
+        return Ok();
+    }
 
     [HttpGet]
     [Route("/Manual")]
     public IActionResult SetManualMode()
-        => Ok("TODO");
-
+    {
+        _rs.SetManual();
+        return Ok();
+    }
 
     [HttpGet]
     [Route("/Fan/Run")]
     public IActionResult RunFan()
         => Ok(_fan.Run());
-
 
     [HttpGet]
     [Route("/Fan/Stop")]
@@ -45,7 +58,6 @@ public class StatusController : ControllerBase
     [Route("/FogMachine/Run")]
     public IActionResult RunFogMachine()
         => Ok(_fm.Run());
-
 
     [HttpGet]
     [Route("/FogMachine/Stop")]
@@ -62,14 +74,16 @@ public class StatusController : ControllerBase
 
             FogMachineRunning: _fm.IsRunning,
             FogMachineUptime: _fm.Uptime,
-            
-            Mode:"TODO",
 
             TemperatureCelsius: _cs.LatestTemperature?.Value.DegreesCelsius,
             LatestTemperatureRead: _cs.LatestTemperature?.Timestamp,
 
             HumidityPercentage: _cs.LatestRelativeHumidity?.Value.Value,
-            LatestHumidityRead: _cs.LatestRelativeHumidity?.Timestamp
+            LatestHumidityRead: _cs.LatestRelativeHumidity?.Timestamp,
+            
+            Mode: _rs.ManualMode ? "Manual" : "Automatic",
+            ActiveRecipe: _rs.ActiveRecipe,
+            ActivePhase: _rs.ActivePhase
         );
         return Ok(status);
     }
@@ -81,9 +95,11 @@ public record RhizosphereStatus
     Uptime FanUptime,
     bool FogMachineRunning,
     Uptime FogMachineUptime,
-    string Mode,
     double? TemperatureCelsius,
     DateTime? LatestTemperatureRead,
     double? HumidityPercentage,
-    DateTime? LatestHumidityRead
+    DateTime? LatestHumidityRead,
+    string Mode,
+    Recipe ActiveRecipe,
+    Phase ActivePhase
 );

@@ -1,8 +1,3 @@
-global using Rhizosphere.Core;
-global using Microsoft.AspNetCore.Mvc;
-global using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Host.UseSystemd();
@@ -15,15 +10,15 @@ builder.Services.AddSingleton<Fan>();
 builder.Services.AddSingleton<Webcam>();
 builder.Services.AddSingleton<FogMachine>();
 
-
 builder.Services.AddSingleton<RecipeRepository>();
 builder.Services.AddSingleton<ClimateService>();
+builder.Services.AddSingleton<RhizosphereState>();
+
 builder.Services.AddHostedService(s => s.GetRequiredService<ClimateService>());
 builder.Services.AddHostedService<RhizosphereHandler>();
 builder.Services.AddHostedService<TimelapseService>();
 
 builder.Services.Configure<RhizosphereOptions>(builder.Configuration.GetSection(nameof(RhizosphereOptions)));
-
 builder.Services.Configure<FanOptions>(builder.Configuration.GetSection(nameof(RhizosphereOptions) + ":" + nameof(FanOptions)));
 builder.Services.Configure<FogMachineOptions>(builder.Configuration.GetSection(nameof(RhizosphereOptions) + ":" + nameof(FogMachineOptions)));
 
@@ -43,7 +38,7 @@ try
 {
     app.Run();
 }
-catch (System.Exception ex)
+catch (Exception ex)
 {
-    System.Console.WriteLine(ex.Message);
+    Console.WriteLine(ex.Message);
 }

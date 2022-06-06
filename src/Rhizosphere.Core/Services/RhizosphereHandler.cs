@@ -3,8 +3,7 @@ namespace Rhizosphere.Core;
 public class RhizosphereHandler : BackgroundService
 {
     private readonly ILogger<RhizosphereHandler> _log;
-    private readonly IOptionsMonitor<RhizosphereOptions> _opt;
-    private readonly RecipeRepository _rr;
+    private readonly RhizosphereState _state;
     private readonly ClimateService _cs;
     private readonly Fan _fan;
     private readonly FogMachine _fm;
@@ -12,22 +11,18 @@ public class RhizosphereHandler : BackgroundService
     public RhizosphereHandler
         (
             ILogger<RhizosphereHandler> logger,
-            IOptionsMonitor<RhizosphereOptions> options,
-            RecipeRepository recipeRepository,
+            RhizosphereState state,
             ClimateService cs,
             Fan fan,
             FogMachine fogMachine
         )
     {
         _log = logger;
-        _opt = options;
-        _rr = recipeRepository;
+        _state = state;
         _cs = cs;
         _fan = fan;
         _fm = fogMachine;
     }
-
-    public Phase ActivePhase { get; set; } = new();
 
     protected override async Task ExecuteAsync(CancellationToken token = default)
     {
@@ -36,6 +31,10 @@ public class RhizosphereHandler : BackgroundService
             try
             {
                 await Task.Delay(500, token);
+
+                if(_state.ManualMode)
+                    continue;
+
                 HandleRhizosphere();
             }
             catch (TaskCanceledException)
@@ -51,26 +50,8 @@ public class RhizosphereHandler : BackgroundService
 
     private void HandleRhizosphere()
     {
-        var activePhase = GetPhaseFromRecipes();
-
-        HandleFan(activePhase);
-        HandleFogMachine(activePhase);
-    }
-
-    private Phase GetPhaseFromRecipes()
-    {
-        var activePhase = GetActivePhase();
-
-        if (activePhase is null)
-            activePhase = new();
-
-        if (ActivePhase.Name != activePhase.Name)
-        {
-            _log.LogWarning("Active Phase change! Active Phase name: {apn}", activePhase.Name);
-            ActivePhase = activePhase;
-        }
-
-        return activePhase;
+        HandleFan(_state.ActivePhase);
+        HandleFogMachine(_state.ActivePhase);
     }
 
     private void HandleFan(Phase activePhase)
@@ -134,17 +115,4 @@ public class RhizosphereHandler : BackgroundService
         && cs.LatestRelativeHumidity.Value.Value < activePhase.MinHumidity
         && cs.LatestRelativeHumidity.Value.Value < activePhase.MaxHumidity
         && fm.IsWithinUptimeLimit();
-
-    private Recipe? GetActiveRecipe()
-        => _rr.GetRecipe(_opt.CurrentValue.ActiveRecipeName);
-
-    private Phase? GetActivePhase()
-    {
-        var ar = GetActiveRecipe();
-
-        if (ar is null)
-            return null;
-
-        return ar.Phases.FirstOrDefault(f => f.Name == _opt.CurrentValue.ActivePhaseName);
-    }
 }
