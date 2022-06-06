@@ -1,8 +1,4 @@
-using Microsoft.Extensions.Options;
-
 namespace Rhizosphere.Core;
-
-
 
 public class RhizosphereHandler : BackgroundService
 {
