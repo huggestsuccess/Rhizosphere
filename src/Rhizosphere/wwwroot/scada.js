@@ -29,8 +29,8 @@ async function getStatus() {
 }
 
 async function drawStatus(status) {
-    drawElement("temperature", status.temperatureCelsius, "", " C°");
-    drawElement("humidity", status.humidityPercentage, "", " %");
+    drawElement("temperature", status.temperatureCelsius.toFixed(2), "", " C°");
+    drawElement("humidity", status.humidityPercentage.toFixed(2), "", " %");
 
 
     drawElement("mode", status.mode, "", "");
@@ -48,5 +48,5 @@ function drawElement(id, status, prefix, suffix) {
     let elem = document.getElementById(id);
 
     if (elem)
-        id.textContent = prefix + status + suffix;
+        elem.textContent = prefix + status + suffix;
 }
