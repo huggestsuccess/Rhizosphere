@@ -29,8 +29,8 @@ async function getStatus() {
 }
 
 async function drawStatus(status) {
-    drawElement("temperature", status.temperatureCelsius.toFixed(2), "", " C°");
-    drawElement("humidity", status.humidityPercentage.toFixed(2), "", " %");
+    drawElement("temperature", status.temperatureCelsius?.toFixed(2), "", " C°");
+    drawElement("humidity", status.humidityPercentage?.toFixed(2), "", " %");
 
 
     drawElement("mode", status.mode, "", "");
