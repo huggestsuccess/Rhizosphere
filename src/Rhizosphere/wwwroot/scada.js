@@ -29,14 +29,25 @@ async function getStatus() {
 }
 
 async function drawStatus(status) {
-    let temperatureElement = document.getElementById("temperature");
-
-    if (temperatureElement)
-        temperatureElement.textContent = status.temperatureCelsius + " C°";
+    drawElement("temperature",status.temperatureCelsius, "", " C°");
+    drawElement("humidity",status.humidityPercentage, "", " %");
 
 
-    let humidityElement = document.getElementById("humidity");
+    drawElement("mode",status.mode, "", "");
 
-    if (humidityElement)
-        humidityElement.textContent = status.humidityPercentage + " %";
+    drawElement("fanRunning",status.fanRunning, "", "");
+    drawElement("fogMachineRunning",status.fogMachineRunning, "", "");
+
+
+    drawElement("name",status.activeRecipe.name, "", "");
+    drawElement("commonName",status.activeRecipe.commonName, "", "");
+    drawElement("phaseName",status.activePhase.name, "", "");
+}
+
+function drawElement(id, status, prefix, suffix)
+{
+    let elem = document.getElementById(id);
+
+    if (id)
+        id.textContent = prefix + status + suffix;
 }
